@@ -61,7 +61,19 @@ function App() {
     localStorage.clear();
   }
 
-  //
+  /*let taskInput = document.getElementById("task");
+  taskInput.addEventListener("keypress", function (event) {
+    if (event.key === "enter") {
+      document.getElementById("taskbtn").click();
+    }
+  })*/
+
+  const handleKeyPress = (e) => {
+    if (e.key === "enter") {
+      addTask();
+    }
+  }
+
   useEffect(() => {
     if (localStorage.getItem("task")) {
       let arr = JSON.parse(localStorage.getItem("task"));
@@ -83,8 +95,10 @@ function App() {
     <div className="App">
       <div className='main'>
         <h1>TO-DO List <button className='reset' onClick={resetApp}>Reset</button></h1>
-        <input value={newTask} type="text" placeholder="New Task Here!" onChange={(e) => setNewTask(e.target.value)} />
-        <button className='addbtn' onClick={addTask}>Add Task</button>
+        <form>
+          <input value={newTask} type="text" placeholder="New Task Here!" onChange={(e) => setNewTask(e.target.value)} onKeyPress={handleKeyPress} />
+          <button className='addbtn' onClick={addTask}>Add Task</button>
+        </form>
         <ul>
           {
             taskList.map((val, index) => (
